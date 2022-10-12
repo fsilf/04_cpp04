@@ -1,4 +1,26 @@
 #+title: cpp04 Notes
 #+author: fsilvaf
 
+* Polymorphism, abstract classes and interfaces
+
+** Methods
+*** Virtual Member Functions (Methods)
+References:
+- [[https://en.cppreference.com/w/cpp/language/virtual][cpp reference - virtual function specifier]]
+
+ Virtual functions are member functions whose behavior can be overridden in derived classes. As opposed to non-virtual functions, the overriding behavior is preserved even if there is no compile-time information about the actual type of the class. That is to say, if a derived class is handled using pointer or reference to the base class, a call to an overridden virtual function would invoke the behavior defined in the derived class. Such a function call is known as virtual function call or virtual call.
+ 
+  
+*** Virtual Destructors
+References:
+- [[https://stackoverflow.com/a/10026522][Stack - C++ Virtual functions but no virtual destructors]]
+- [[https://en.cppreference.com/w/cpp/language/virtual][cpp - virtual function specifier]]
+- [[https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#c35-a-base-class-destructor-should-be-either-public-and-virtual-or-protected-and-non-virtual][C++ CoreGuidelines - A base class destructor should be either public and virtual, or protected and non-virtual]]
+  
+A useful guideline is that the destructor of any base class must be public and virtual or protected and non-virtual, whenever delete expressions are involved:
+
+To prevent undefined behavior. If the destructor is public, then calling code can attempt to destroy a derived class object through a base class pointer, and the result is undefined if the base class's destructor is non-virtual. If the destructor is protected, then calling code cannot destroy through a base class pointer and the destructor does not need to be virtual; it does need to be protected, not private, so that derived destructors can invoke it. In general, the writer of a base class does not know the appropriate action to be done upon destruction.
+** Abstract Classes
+References:
+- [[https://en.cppreference.com/w/cpp/language/abstract_class][cppreference - Abstract classes]]
 
