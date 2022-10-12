@@ -3,6 +3,12 @@
 
 * Polymorphism, abstract classes and interfaces
 
+** Polymorphism
+References:
+- [[https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#c130-for-making-deep-copies-of-polymorphic-classes-prefer-a-virtual-clone-function-instead-of-public-copy-constructionassignment][CPP Core Guidelines -  For making deep copies of polymorphic classes prefer a virtual clone function instead of public copy construction/assignment]]
+
+- [[https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#c67-a-polymorphic-class-should-suppress-public-copymove][A polymorphic class should suppress public copy/move]]
+
 ** Methods
 *** Virtual Member Functions (Methods)
 References:
@@ -20,7 +26,40 @@ References:
 A useful guideline is that the destructor of any base class must be public and virtual or protected and non-virtual, whenever delete expressions are involved:
 
 To prevent undefined behavior. If the destructor is public, then calling code can attempt to destroy a derived class object through a base class pointer, and the result is undefined if the base class's destructor is non-virtual. If the destructor is protected, then calling code cannot destroy through a base class pointer and the destructor does not need to be virtual; it does need to be protected, not private, so that derived destructors can invoke it. In general, the writer of a base class does not know the appropriate action to be done upon destruction.
+
 ** Abstract Classes
 References:
 - [[https://en.cppreference.com/w/cpp/language/abstract_class][cppreference - Abstract classes]]
 
+Defines an abstract type which cannot be instantiated, but can be used as a base class.
+
+*** Syntax
+A pure virtual function is a virtual function whose declarator has the following syntax:
+
+#+begin_src c++
+declarator virt-specifier(optional) = 0 		
+#+end_src
+
+Here the sequence = 0 is known as pure-specifier, and appears either immediately after the declarator or after the optional virt-specifier (override or final).
+
+pure-specifier cannot appear in a member function definition or friend declaration.
+
+An abstract class is a class that either defines or inherits at least one function for which the final overrider is pure virtual.
+
+*** Explanation
+Abstract classes are used to represent general concepts (for example, Shape, Animal), which can be used as base classes for concrete classes (for example, Circle, Dog).
+
+No objects of an abstract class can be created (except for base subobjects of a class derived from it) and no non-static data members whose type is an abstract class can be declared.
+
+Pointers and references to an abstract class can be declared.
+
+Making a virtual call to a pure virtual function from a constructor or the destructor of the abstract class is undefined behavior (regardless of whether it has a definition or not).
+
+** Interfaces
+References:
+- [[https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rh-abstract][CPP Core Guidelines - If a base class is used as an interface, make it a pure abstract class]
+
+A class is more stable (less brittle) if it does not contain data. Interfaces should normally be composed entirely of public pure virtual functions and a default/empty virtual destructor.
+
+** Other References
+- [[https://en.cppreference.com/w/cpp/language/derived_class][cpp reference - derived class]]
