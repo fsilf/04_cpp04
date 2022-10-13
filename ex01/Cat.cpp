@@ -37,6 +37,7 @@ Brain&	Cat::get_brain() const
 {
 	return *(this->_brain);
 }
+
 /*
 std::ostream&	operator<<(std::ostream& o, Cat const & rhs)
 {

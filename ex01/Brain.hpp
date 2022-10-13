@@ -14,6 +14,9 @@ class Brain
 
 		Brain&			operator=(Brain const & rhs);
 		std::string		ideas[100];
+
+		void			set_idea(unsigned int num_idea, std::string idea);
+		std::string		get_idea(unsigned int num_idea) const;
 };
 
 //std::ostream&	operator<<(std::ostream& o, Brain const & rhs);

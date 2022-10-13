@@ -37,6 +37,7 @@ Brain&	Dog::get_brain() const
 {
 	return *(this->_brain);
 }
+
 /*
 std::ostream&	operator<<(std::ostream& o, Dog const & rhs)
 {

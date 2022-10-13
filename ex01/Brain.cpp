@@ -29,6 +29,19 @@ Brain&	Brain::operator=(Brain const & rhs)
 	return *this;
 }
 
+void	Brain::set_idea(unsigned int num_idea, std::string idea)
+{
+	if (num_idea < 100)
+		this->ideas[num_idea] = idea;
+}
+
+std::string	Brain::get_idea(unsigned int num_idea) const
+{
+	if (num_idea < 100)
+		return this->ideas[num_idea];
+	return "Brain overload";
+}
+
 /*
 std::ostream&	operator<<(std::ostream& o, Brain const & rhs)
 {

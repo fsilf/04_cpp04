@@ -63,3 +63,5 @@ A class is more stable (less brittle) if it does not contain data. Interfaces sh
 
 ** Other References
 - [[https://en.cppreference.com/w/cpp/language/derived_class][cpp reference - derived class]]
+- [[https://stackoverflow.com/questions/20234898/more-modern-way-of-looping-through-c-arrays][Stack - more modern way of looping through C++ arrays]]
+- [[https://github.com/isocpp/CppCoreGuidelines][Cpp CoreGuideLine]]
