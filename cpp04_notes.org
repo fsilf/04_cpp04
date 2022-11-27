@@ -57,9 +57,20 @@ Making a virtual call to a pure virtual function from a constructor or the destr
 
 ** Interfaces
 References:
-- [[https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rh-abstract][CPP Core Guidelines - If a base class is used as an interface, make it a pure abstract class]
+- [[https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rh-abstract][CPP Core Guidelines - If a base class is used as an interface, make it a pure abstract class]]
 
 A class is more stable (less brittle) if it does not contain data. Interfaces should normally be composed entirely of public pure virtual functions and a default/empty virtual destructor.
+
+** The Rule of Three
+Reference:
+- [[https://en.wikipedia.org/wiki/Rule_of_three_%28C++_programming%29][Wikipedia - The Rule of three]]
+
+The rule of three (also known as the law of the big three or the big three) is a rule of thumb in C++ (prior to C++11) that claims that if a class defines any of the following then it should probably explicitly define all three:
+- destructor
+- copy constructor
+- copy assignment operator
+
+Because implicitly-generated constructors and assignment operators simply copy all class data members ("shallow copy"), one should define explicit copy constructors and copy assignment operators for classes that encapsulate complex data structures or have external references such as pointers, if you need to copy the objects pointed to by the class members.
 
 ** Other References
 - [[https://en.cppreference.com/w/cpp/language/derived_class][cpp reference - derived class]]
