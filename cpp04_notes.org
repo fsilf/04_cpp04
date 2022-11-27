@@ -64,6 +64,7 @@ A class is more stable (less brittle) if it does not contain data. Interfaces sh
 ** The Rule of Three
 Reference:
 - [[https://en.wikipedia.org/wiki/Rule_of_three_%28C++_programming%29][Wikipedia - The Rule of three]]
+- [[https://stackoverflow.com/questions/16752850/assignment-operator-and-deep-copy][Stack - Assignment operator and deep copy]]
 
 The rule of three (also known as the law of the big three or the big three) is a rule of thumb in C++ (prior to C++11) that claims that if a class defines any of the following then it should probably explicitly define all three:
 - destructor
