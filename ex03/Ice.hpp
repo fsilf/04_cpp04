@@ -7,12 +7,13 @@ class Ice: public AMateria
 	public:
 		Ice();
 		Ice(std::string type);
-		Ice(Ice const& src);
 		virtual ~Ice();
 
-		Ice&	operator=(Ice const& rhs);
+		Ice*	clone() const;
+		void	use(ICharacter& target);
 
-		AMateria*	clone() const;
-		void		use(ICharacter& target);
+	protected:
+		Ice(Ice const& src);
+		Ice&	operator=(Ice const& rhs);
 }
 #endif

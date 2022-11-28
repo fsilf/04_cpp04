@@ -12,6 +12,6 @@ class MateriaSource: public IMateriaSource
 		MateriaSource&	operator=(MateriaSource const& rhs);
 
 	private:
-		Materia		_sources[4];
+		Materia*		_sources[4];
 }
 #endif

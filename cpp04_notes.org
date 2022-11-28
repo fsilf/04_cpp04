@@ -5,10 +5,116 @@
 
 ** Polymorphism
 References:
-- [[https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#c130-for-making-deep-copies-of-polymorphic-classes-prefer-a-virtual-clone-function-instead-of-public-copy-constructionassignment][CPP Core Guidelines -  For making deep copies of polymorphic classes prefer a virtual clone function instead of public copy construction/assignment]]
 
+
+A polymorphic class is a class that defines or inherits at least one virtual function.
+
+*** Polymorphic classes and public copy/move
 - [[https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#c67-a-polymorphic-class-should-suppress-public-copymove][A polymorphic class should suppress public copy/move]]
 
+A polymorphic class is a class that defines or inherits at least one virtual function. It is likely that it will be used as a base class for other derived classes with polymorphic behavior. If it is accidentally passed by value, with the implicitly generated copy constructor and assignment, we risk slicing: only the base portion of a derived object will be copied, and the polymorphic behavior will be corrupted.
+
+If the class has no data, =delete the copy/move functions. Otherwise, make them protected.
+
+#+begin_src cpp
+  class B { // GOOD: polymorphic class suppresses copying
+  public:
+      B() = default;
+      B(const B&) = delete;
+      B& operator=(const B&) = delete;
+      virtual char m() { return 'B'; }
+      // ...
+  };
+
+  class D : public B {
+  public:
+      char m() override { return 'D'; }
+      // ...
+  };
+
+  void f(B& b)
+  {
+      auto b2 = b; // ok, compiler will detect inadvertent copying, and protest
+  }
+
+  D d;
+  f(d);
+#+end_src
+
+If you need to create deep copies of polymorphic objects, use ~clone()~ functions: see C.130.
+
+**** Exception objects
+Classes that represent exception objects need both to be polymorphic and copy-constructible.
+
+**** Enforcement
+- Flag a polymorphic class with a public copy operation.
+- Flag an assignment of polymorphic class objects.
+
+
+*** For polymorphic classes provide a virtual clone function if copy is needed
+References:
+- [[https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#c130-for-making-deep-copies-of-polymorphic-classes-prefer-a-virtual-clone-function-instead-of-public-copy-constructionassignment][CPP Core Guidelines -  For making deep copies of polymorphic classes prefer a virtual clone function instead of public copy construction/assignment]]
+- [[https://stackoverflow.com/questions/5148706/copying-a-polymorphic-object-in-c][stack - copying a polymorphic object]]
+- [[https://stackoverflow.com/a/25813536][stack - What exactly are covariant return types in C++?]]
+- [[https://stackoverflow.com/a/5148751][stack - Copying a Polymorphic object in C++]]
+
+Copying a polymorphic class is discouraged due to the slicing problem, see [[https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-copy-virtual][C.67]]. If you really need copy semantics, copy deeply: Provide a ~virtual clone~ function that will copy the actual most-derived type and return an owning pointer to the new object, and then in derived classes return the derived type (use a covariant return type).
+
+Note: Covariant return types allow overridden virtual member functions in a derived class to return a different type of object, as long as it can be used in all the same ways as the base class's return type.
+
+- protected copy constructor and assignment operator
+- public virtual clone method
+
+#+begin_src cpp
+  class Base
+  {
+  public:
+    virtual Base* Clone() = 0;
+  };
+
+  class Derivedn : public Base
+  {
+  public:
+    //This is OK, its called covariant return type.
+    Derivedn* Clone()
+    {
+      return new Derivedn(*this);
+    }
+  private:
+    Derivedn(const Derivedn&) : ... {}
+  };
+#+end_src
+
+  ,#+begin_src cpp
+    class B {
+    public:
+	B() = default;
+	virtual ~B() = default;
+	virtual gsl::owner<B*> clone() const = 0;
+    protected:
+	 B(const B&) = default;
+	 B& operator=(const B&) = default;
+	 B(B&&) = default;
+	 B& operator=(B&&) = default;
+	// ...
+    };
+
+    class D : public B {
+    public:
+	gsl::owner<D*> clone() const override
+	{
+	    return new D{*this};
+	};
+    };
+
+#+end_src
+
+**** To check
+- [[https://stackoverflow.com/questions/46918749/how-to-clone-an-object-without-copy-constructor][stack - How to clone an object without copy constructor]]
+- [[https://herbsutter.com/2019/10/03/gotw-ish-solution-the-clonable-pattern/][GotW-ish Solution: The ‘clonable’ pattern]]
+- [[https://stackoverflow.com/questions/12255546/c-deep-copying-a-base-class-pointer][stack - C++: Deep copying a Base class pointer]]
+- [[https://stackoverflow.com/questions/5731217/how-to-copy-create-derived-class-instance-from-a-pointer-to-a-polymorphic-base-c][stack - How to copy/create derived class instance from a pointer to a polymorphic base class?]]
+- [[https://stackoverflow.com/questions/57176738/copy-constructor-for-derived-class][stack - Copy Constructor for derived class]]
 ** Methods
 *** Virtual Member Functions (Methods)
 References:
@@ -77,3 +183,33 @@ Because implicitly-generated constructors and assignment operators simply copy a
 - [[https://en.cppreference.com/w/cpp/language/derived_class][cpp reference - derived class]]
 - [[https://stackoverflow.com/questions/20234898/more-modern-way-of-looping-through-c-arrays][Stack - more modern way of looping through C++ arrays]]
 - [[https://github.com/isocpp/CppCoreGuidelines][Cpp CoreGuideLine]]
+*** Initializing an array
+
+**** How to initialize an "empty" array
+References: [[https://en.cppreference.com/w/c/language/array_initialization][cppreference - Array initialization]]
+
+To initialize an empty array:
+#+begin_src
+my_array[10] = {}
+#+end_src
+
+**** Array initialization using initialization list
+Reference: [[https://stackoverflow.com/questions/44500501/how-to-initialize-an-array-using-initializer-list-c][stack - How to Initialize an array using initializer-list C++]]
+
+*** Override specifier cpp11
+References:
+- [[https://en.cppreference.com/w/cpp/language/override][cppreference - override specifier]]
+
+Specifies that a virtual function overrides another virtual function
+
+*** Default specifier cpp11
+Reference:
+- [[https://en.cppreference.com/w/cpp/language/default_constructor][cppreference - Default connstructors]]
+
+A default constructor is a constructor which can be called with no arguments (either defined with an empty parameter list, or with default arguments provided for every parameter).
+
+#+begin_src cpp
+class-name () = default;
+#+end_src
+
+With the default specifier the compiler will define the implicit default constructor even if other constructors are present.

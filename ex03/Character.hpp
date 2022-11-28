@@ -3,6 +3,7 @@
 # include <string>
 # include <iostream>
 # include "ICharacter.hpp"
+
 class Character: public ICharacter
 {
 	public:
@@ -13,14 +14,14 @@ class Character: public ICharacter
 
 		Character& 	operator=(Character const& rhs);
 
-		virtual 	std::string const & getName() const = 0;
-		virtual 	void equip(AMateria* m) = 0;
-		virtual 	void unequip(ind idx) = 0;
-		virtual 	void use(int idx, ICharacter& target) = 0;
+		std::string const & getName() const;
+		void equip(AMateria* m);
+		void unequip(ind idx);
+		void use(int idx, ICharacter& target) = 0;
 
 	private:
 		std::string	_name;
-		Materia		_inventory[4];
+		Materia*	_inventory[4];
 };
 
 #endif

@@ -7,12 +7,13 @@ class Cure: public AMateria
 	public:
 		Cure();
 		Cure(std::string type);
-		Cure(Cure const& src);
 		virtual ~Cure();
 
-		Cure&	operator=(Cure const& rhs);
+		Cure*	clone() const;
+		void	use(ICharacter& target);
 
-		AMateria*	clone() const;
-		void		use(ICharacter& target);
+	protected:
+		Cure(Cure const& src);
+		Cure&	operator=(Cure const& rhs);
 }
 #endif
