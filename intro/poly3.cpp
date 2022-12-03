@@ -30,8 +30,8 @@ void	Warrior::attack(std::string const & target)
 }
 
 // Interfaces have no attributes and all its member functions are pure
-// Interfaces are just a way to define behaviors, the concrete function will be defined
-// in the child class
+// Interfaces are just a way to define behaviors, the concrete function will be
+// defined in the child class
 class ICoffeeMaker
 {
 	public:

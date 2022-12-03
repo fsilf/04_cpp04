@@ -1,13 +1,48 @@
-
 #+title: cpp04 Notes
 #+author: fsilvaf
+
+
+* Use of public, protected and public in a class declaration
+References:
+- [[https://stackoverflow.com/questions/1563765/use-of-public-in-a-derived-class-declaration][Stack - Use of "Public" in a derived class declaration?]]
+- [[https://stackoverflow.com/questions/860339/what-is-the-difference-between-public-private-and-protected-inheritance-in-c/1372858#1372858][Stack - What is the difference between public, private, and protected inheritance in C++?]]
+
+#+begin_src cpp
+  class A 
+  {
+      public:
+	 int x;
+      protected:
+	 int y;
+      private:
+	 int z;
+  };
+
+  class B : public A
+  {
+      // x is public
+      // y is protected
+      // z is not accessible from B
+  };
+
+  class C : protected A
+  {
+      // x is protected
+      // y is protected
+      // z is not accessible from C
+  };
+
+  class D : private A    // 'private' is default for classes
+  {
+      // x is private
+      // y is private
+      // z is not accessible from D
+  };
+#+end_src
 
 * Polymorphism, abstract classes and interfaces
 
 ** Polymorphism
-References:
-
-
 A polymorphic class is a class that defines or inherits at least one virtual function.
 
 *** Polymorphic classes and public copy/move
@@ -109,14 +144,62 @@ Note: Covariant return types allow overridden virtual member functions in a deri
   };
 #+end_src
 
-**** To check
-- [[https://stackoverflow.com/questions/46918749/how-to-clone-an-object-without-copy-constructor][stack - How to clone an object without copy constructor]]
-- [[https://herbsutter.com/2019/10/03/gotw-ish-solution-the-clonable-pattern/][GotW-ish Solution: The ‘clonable’ pattern]]
-- [[https://stackoverflow.com/questions/12255546/c-deep-copying-a-base-class-pointer][stack - C++: Deep copying a Base class pointer]]
-- [[https://stackoverflow.com/questions/5731217/how-to-copy-create-derived-class-instance-from-a-pointer-to-a-polymorphic-base-c][stack - How to copy/create derived class instance from a pointer to a polymorphic base class?]]
-- [[https://stackoverflow.com/questions/57176738/copy-constructor-for-derived-class][stack - Copy Constructor for derived class]]
 
-** Methods
+** Virtual Functions
+
+*** Virtual function specifier
+References:
+- [[https://en.cppreference.com/w/cpp/language/virtual][cpp - virtual function specifier]]
+- [[https://stackoverflow.com/a/4895297][Stack - C++ "virtual" keyword for functions in derived classes. Is it necessary?]]
+
+The virtual specifier specifies that a non-static member function is virtual and supports dynamic dispatch. It may only appear in the decl-specifier-seq of the initial declaration of a non-static member function (i.e., when it is declared in the class definition). 
+
+Virtual functions are member functions whose behavior can be overridden in derived classes. As opposed to non-virtual functions, the overriding behavior is preserved even if there is no compile-time information about the actual type of the class. That is to say, if a derived class is handled using pointer or reference to the base class, a call to an overridden virtual function would invoke the behavior defined in the derived class. Such a function call is known as virtual function call or virtual call. Virtual function call is suppressed if the function is selected using qualified name lookup (that is, if the function's name appears to the right of the scope resolution operator ::).
+
+#+begin_src cpp
+  #include <iostream>
+
+  struct Base
+  {
+      virtual void f()
+      {
+	  std::cout << "base\n";
+      }
+  };
+
+  struct Derived : Base
+  {
+      void f() override // 'override' is optional
+      {
+	  std::cout << "derived\n";
+      }
+  };
+
+  int main()
+  {
+      Base b;
+      Derived d;
+
+      // virtual function call through reference
+      Base& br = b; // the type of br is Base&
+      Base& dr = d; // the type of dr is Base& as well
+      br.f(); // prints "base"
+      dr.f(); // prints "derived"
+
+      // virtual function call through pointer
+      Base* bp = &b; // the type of bp is Base*
+      Base* dp = &d; // the type of dp is Base* as well
+      bp->f(); // prints "base"
+      dp->f(); // prints "derived"
+
+      // non-virtual function call
+      br.Base::f(); // prints "base"
+      dr.Base::f(); // prints "base"
+  }
+#+end_src
+
+The 'virtualness' of a function is propagated implicitly. Adding the ~virtual~ keyword to the derived functions is not neccesary (), but it is recommneded as it clearly 'advertises' the fact to the user that the function is virtual. This will be important to anyone further sub-classing B without having to check A's definition. For deep class hierarchies, this becomes especially important.
+
 *** Virtual Member Functions (Methods)
 References:
 - [[https://en.cppreference.com/w/cpp/language/virtual][cpp reference - virtual function specifier]]
@@ -180,6 +263,22 @@ The rule of three (also known as the law of the big three or the big three) is a
 
 Because implicitly-generated constructors and assignment operators simply copy all class data members ("shallow copy"), one should define explicit copy constructors and copy assignment operators for classes that encapsulate complex data structures or have external references such as pointers, if you need to copy the objects pointed to by the class members.
 
+** Circular references
+References:
+- [[https://stackoverflow.com/a/553869][Stack - When can I use a forward declaration?]]
+
+
+
+Put yourself in the compiler's position: when you forward declare a type, all the compiler knows is that this type exists; it knows nothing about its size, members, or methods. This is why it's called an incomplete type. Therefore, you cannot use the type to declare a member, or a base class, since the compiler would need to know the layout of the type.
+
+What you can do with an incomplete type:
+
+- Declare a member to be a pointer or a reference to the incomplete type
+
+- Declare functions or methods which accept/return incomplete types
+
+- Define functions or methods which accept/return pointers/references to the incomplete type (but without using its members).
+
 ** Other References
 - [[https://en.cppreference.com/w/cpp/language/derived_class][cpp reference - derived class]]
 - [[https://stackoverflow.com/questions/20234898/more-modern-way-of-looping-through-c-arrays][Stack - more modern way of looping through C++ arrays]]
@@ -216,3 +315,11 @@ class-name () = default;
 #+end_src
 
 With the default specifier the compiler will define the implicit default constructor even if other constructors are present.
+
+**** To check
+- [[https://stackoverflow.com/questions/46918749/how-to-clone-an-object-without-copy-constructor][stack - How to clone an object without copy constructor]]
+- [[https://herbsutter.com/2019/10/03/gotw-ish-solution-the-clonable-pattern/][GotW-ish Solution: The ‘clonable’ pattern]]
+- [[https://stackoverflow.com/questions/12255546/c-deep-copying-a-base-class-pointer][stack - C++: Deep copying a Base class pointer]]
+- [[https://stackoverflow.com/questions/5731217/how-to-copy-create-derived-class-instance-from-a-pointer-to-a-polymorphic-base-c][stack - How to copy/create derived class instance from a pointer to a polymorphic base class?]]
+- [[https://stackoverflow.com/questions/57176738/copy-constructor-for-derived-class][stack - Copy Constructor for derived class]]
+- [[http://www.gotw.ca/publications/mill06.htm][Uses and Abuses of Inheritance]]

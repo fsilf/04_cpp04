@@ -10,7 +10,7 @@ OBJ = $(SRC:%.cpp=%.opp)
 
 RM = rm -rf
 CC = clang++
-CFLAGS = -Werror -Wall -Wextra -fsanitize=address
+CFLAGS = -Werror -Wall -Wextra #-fsanitize=address
 
 .PHONY: all re fclean clean
 

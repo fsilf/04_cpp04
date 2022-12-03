@@ -1,8 +1,5 @@
 #ifndef CAT_HPP
 # define CAT_HPP
-# include <string>
-# include <iostream>
-# include <ostream>
 # include "Animal.hpp"
 
 class Cat: public Animal
@@ -11,7 +8,7 @@ class Cat: public Animal
 		Cat();
 		Cat(std::string type);
 		Cat(Cat const & src);
-		~Cat();
+		virtual ~Cat();
 
 		Cat&			operator=(Cat const & rhs);
 		virtual void	makeSound() const;			
