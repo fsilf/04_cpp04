@@ -1,10 +1,10 @@
 NAME= materias
 SRC=	main.cpp\
-	Ice.cpp\
-	Cure.cpp\
-	Materia.cpp\
-	MateriaSource.cpp\
-	Character.cpp
+		Ice.cpp\
+		Cure.cpp\
+		AMateria.cpp\
+		MateriaSource.cpp\
+		Character.cpp
 
 OBJ= $(SRC:%.cpp=%.opp)
 

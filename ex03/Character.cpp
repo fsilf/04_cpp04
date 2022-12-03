@@ -1,24 +1,29 @@
 #include "Character.hpp"
 
-Character::Character():ICharacter(), _name("unnamed"), _inventory{}
+Character::Character():ICharacter(), inventory(), _name("unnamed")
 {
 	std::cout << "Character default constructor called." << std::endl;
 }
 
-Character::Character(std::string name):ICharacter(), _name(name)
+Character::Character(std::string name):ICharacter(), inventory(), _name(name)
 {
-	std::cout << "Character string constructor called." << std::endl;
+	std::cout << "Character string constructor called with name " 
+		<< this->_name << std::endl;
 }
 
 Character::~Character()
 {
-	std::cout << "Character destructor called." << std::endl;
-	unsigned int i = 0;
-	while(this->_inventory[i] != NULL)
+	std::cout << "Character destructor called for " << this->_name << std::endl;
+	std::cout << "Cleaning inventory: \n"; 
+	for(unsigned int i=0; i<4; i++)
 	{
-		delete this->_inventory[i];
-		std::cout << "deleting _inventory[" << i << "]" << std::endl;
-		i++;
+		if(this->inventory[i] != NULL)
+		{
+			std::cout << "deleting inventory[" << i << "]: "
+				<< this->inventory[i]->getType() << " from character "
+				<< this->_name << std::endl;
+			this->inventory[i] = NULL;
+		}
 	}
 }
 
@@ -30,18 +35,68 @@ Character::Character(const Character& src)
 
 Character& Character::operator=(const Character& rhs)
 {
-	if (*this == rhs)
-		return *this;
-	this->_name = rhs.getName();
-	for(unsigned int i=0; i<4; i++)
+	if (this != &rhs)
 	{
-		this->_inventory[i] = rhs._inventory[i].clone();
+		this->_name = rhs.getName();
+		for(unsigned int i=0; i<4; i++)
+		{
+			this->inventory[i] = rhs.inventory[i];
+		}
 	}
 	return *this;
 }
 
-const std::string& Character::getName() const
+const std::string&	Character::getName() const
 {
 	return this->_name;
 }
 
+void	Character::setName(const std::string name)
+{
+	this->_name = name;
+	std::cout << "Name of character set to: " << this->_name << std::endl;
+}
+
+void	Character::equip(AMateria* m)
+{
+	unsigned int i=0;
+	if (m == NULL)
+		return;
+	while(this->inventory[i] != NULL)
+		i++;
+	if (i < 4)
+	{
+		this->inventory[i] = m;
+		std::cout << "Adding materia " << m->getType() << " to the inventory of "
+			<< this->_name << std::endl;
+		return;
+	}
+	std::cout << "The inventory is full" << std::endl;
+}
+
+void	Character::unequip(int idx)
+{
+	if (idx < 4 && idx >= 0 )
+	{
+		if (this->inventory[idx] != NULL)
+		{
+			std::cout << "Removing materia " << idx << " with type "
+				<< this->inventory[idx]->getType() << " from the inventory of "
+				<< this->_name << std::endl;
+			this->inventory[idx] = NULL;
+		}
+		return;
+	}
+	std::cout << "Not a valid id" << std::endl;
+}
+
+void	Character::list_inventory() const
+{
+	std::cout << "---Inventory of " << this->_name << " is: " << std::endl;
+	for (unsigned int i=0; i<4; i++)
+	{
+		if (this->inventory[i] != NULL)
+			std::cout << i << " : " << this->inventory[i]->getType() << std::endl;
+	}
+	std::cout << "--------------\n";
+}

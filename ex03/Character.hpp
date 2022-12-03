@@ -8,20 +8,22 @@ class Character: public ICharacter
 {
 	public:
 		Character();
-		Character(std:string name);
+		Character(std::string name);
 		Character(Character const& src);
 		virtual ~Character();
 
 		Character& 	operator=(Character const& rhs);
 
 		std::string const & getName() const;
+		void setName(const std::string name);
 		void equip(AMateria* m);
-		void unequip(ind idx);
-		void use(int idx, ICharacter& target) = 0;
+		void unequip(int idx);
+		//void use(int idx, ICharacter& target) = 0;
+		void list_inventory() const;
 
+		AMateria*	inventory[4];
 	private:
 		std::string	_name;
-		Materia*	_inventory[4];
 };
 
 #endif

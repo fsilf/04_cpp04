@@ -11,7 +11,9 @@ class MateriaSource: public IMateriaSource
 
 		MateriaSource&	operator=(MateriaSource const& rhs);
 
-	private:
-		Materia*		_sources[4];
-}
+		virtual void		learnMateria(AMateria* materia);
+		virtual AMateria*	createMateria(std::string const& type);
+
+		AMateria*		sources[4];
+};
 #endif

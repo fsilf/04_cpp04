@@ -6,7 +6,7 @@ AMateria::AMateria():_type("materia")
 		<< this->_type << std::endl;
 }
 
-AMateria::AMateria(std::string& type):_type(type)
+AMateria::AMateria(const std::string& type):_type(type)
 {
 	std::cout << "AMateria string constructor called with type: "
 		<< this->_type << std::endl;

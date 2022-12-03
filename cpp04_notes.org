@@ -1,3 +1,4 @@
+
 #+title: cpp04 Notes
 #+author: fsilvaf
 
@@ -85,28 +86,27 @@ Note: Covariant return types allow overridden virtual member functions in a deri
   };
 #+end_src
 
-  ,#+begin_src cpp
-    class B {
-    public:
-	B() = default;
-	virtual ~B() = default;
-	virtual gsl::owner<B*> clone() const = 0;
-    protected:
-	 B(const B&) = default;
-	 B& operator=(const B&) = default;
-	 B(B&&) = default;
-	 B& operator=(B&&) = default;
-	// ...
-    };
+#+begin_src cpp
+  class B {
+  public:
+      B() = default;
+      virtual ~B() = default;
+      virtual gsl::owner<B*> clone() const = 0;
+  protected:
+       B(const B&) = default;
+       B& operator=(const B&) = default;
+       B(B&&) = default;
+       B& operator=(B&&) = default;
+      // ...
+  };
 
-    class D : public B {
-    public:
-	gsl::owner<D*> clone() const override
-	{
-	    return new D{*this};
-	};
-    };
-
+  class D : public B {
+  public:
+      gsl::owner<D*> clone() const override
+      {
+	  return new D{*this};
+      };
+  };
 #+end_src
 
 **** To check
@@ -115,6 +115,7 @@ Note: Covariant return types allow overridden virtual member functions in a deri
 - [[https://stackoverflow.com/questions/12255546/c-deep-copying-a-base-class-pointer][stack - C++: Deep copying a Base class pointer]]
 - [[https://stackoverflow.com/questions/5731217/how-to-copy-create-derived-class-instance-from-a-pointer-to-a-polymorphic-base-c][stack - How to copy/create derived class instance from a pointer to a polymorphic base class?]]
 - [[https://stackoverflow.com/questions/57176738/copy-constructor-for-derived-class][stack - Copy Constructor for derived class]]
+
 ** Methods
 *** Virtual Member Functions (Methods)
 References:
@@ -194,7 +195,9 @@ my_array[10] = {}
 #+end_src
 
 **** Array initialization using initialization list
-Reference: [[https://stackoverflow.com/questions/44500501/how-to-initialize-an-array-using-initializer-list-c][stack - How to Initialize an array using initializer-list C++]]
+Reference:
+- [[https://stackoverflow.com/questions/44500501/how-to-initialize-an-array-using-initializer-list-c][stack - How to Initialize an array using initializer-list C++]]
+- [[https://stackoverflow.com/questions/27382036/zero-initialize-array-member-in-initialization-list][Stack - Zero-Initialize array member in initialization list]]
 
 *** Override specifier cpp11
 References:
