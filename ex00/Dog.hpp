@@ -1,8 +1,5 @@
 #ifndef DOG_HPP
 # define DOG_HPP
-# include <string>
-# include <iostream>
-# include <ostream>
 # include "Animal.hpp"
 
 class Dog: public Animal
@@ -11,7 +8,7 @@ class Dog: public Animal
 		Dog();
 		Dog(std::string type);
 		Dog(Dog const & src);
-		~Dog();
+		virtual ~Dog();
 
 		Dog&			operator=(Dog const & rhs);
 		virtual void	makeSound() const;			

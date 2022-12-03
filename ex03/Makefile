@@ -1,18 +1,18 @@
-NAME = polymorph
-SRC =	main.cpp\
-		Animal.cpp\
-		WrongAnimal.cpp\
-		Dog.cpp\
-		WrongCat.cpp\
-		Cat.cpp
+NAME= materias
+SRC=	main.cpp\
+		Ice.cpp\
+		Cure.cpp\
+		AMateria.cpp\
+		MateriaSource.cpp\
+		Character.cpp
 
-OBJ = $(SRC:%.cpp=%.opp)
+OBJ= $(SRC:%.cpp=%.opp)
 
 RM = rm -rf
 CC = clang++
 CFLAGS = -Werror -Wall -Wextra #-fsanitize=address
 
-.PHONY: all re fclean clean
+.PHONY: all clean re fclean
 
 %.opp:%.cpp
 	$(CC) $(CFLAGS) -c $< -o $@

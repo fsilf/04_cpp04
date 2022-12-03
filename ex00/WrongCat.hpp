@@ -1,8 +1,5 @@
 #ifndef WRONGCAT_HPP
 # define WRONGCAT_HPP
-# include <string>
-# include <iostream>
-# include <ostream>
 # include "WrongAnimal.hpp"
 
 class WrongCat: public WrongAnimal
@@ -11,7 +8,7 @@ class WrongCat: public WrongAnimal
 		WrongCat();
 		WrongCat(std::string type);
 		WrongCat(WrongCat const & src);
-		~WrongCat();
+		virtual ~WrongCat();
 
 		WrongCat&		operator=(WrongCat const & rhs);
 		void			makeSound() const;			
