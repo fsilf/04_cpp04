@@ -1,6 +1,3 @@
-#include <iostream>
-#include <ostream>
-#include <string>
 #include "Brain.hpp"
 
 Brain::Brain():ideas()
@@ -41,11 +38,3 @@ std::string	Brain::get_idea(unsigned int num_idea) const
 		return this->ideas[num_idea];
 	return "Brain overload";
 }
-
-/*
-std::ostream&	operator<<(std::ostream& o, Brain const & rhs)
-{
-	o << "Brain with type " << rhs.getType() << std::endl; 
-	return o;
-}
-*/

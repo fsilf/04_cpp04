@@ -1,8 +1,6 @@
 #ifndef ANIMAL_HPP
 # define ANIMAL_HPP
-# include <string>
 # include <iostream>
-# include <ostream>
 
 class Animal
 {

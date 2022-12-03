@@ -1,6 +1,3 @@
-#include <iostream>
-#include <ostream>
-#include <string>
 #include "Animal.hpp"
 
 Animal::Animal():_type("Animal")
