@@ -8,8 +8,13 @@ int main()
 {
 	std::cout << "--------Minimal main--------------\n";
 	IMateriaSource* src = new MateriaSource();
+	std::cout << "--------testing learnMateria\n";
 	src->learnMateria(new Ice());
 	src->learnMateria(new Cure());
+	src->learnMateria(new Cure());
+	src->learnMateria(new Cure());
+	src->learnMateria(new Cure());
+	std::cout << "--------testing learnMateria OK\n";
 
 	ICharacter* me = new Character("me");
 

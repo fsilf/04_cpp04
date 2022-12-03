@@ -42,7 +42,7 @@ void	MateriaSource::learnMateria(AMateria* materia)
 	unsigned int i=0;
 	if (materia == NULL)
 		return;
-	while(this->sources[i] != NULL)
+	while(i<4 && this->sources[i] != NULL)
 		i++;
 	if (i < 4)
 	{
@@ -50,6 +50,7 @@ void	MateriaSource::learnMateria(AMateria* materia)
 		return;
 	}
 	std::cout << "MateriaSource is full, cannot learn any more materias.\n";
+	delete materia;
 }
 
 AMateria*	MateriaSource::createMateria(std::string const& type)

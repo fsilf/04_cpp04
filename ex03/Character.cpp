@@ -62,7 +62,7 @@ void	Character::equip(AMateria* m)
 	unsigned int i=0;
 	if (m == NULL)
 		return;
-	while(this->inventory[i] != NULL)
+	while(i<4 && this->inventory[i] != NULL)
 		i++;
 	if (i < 4)
 	{

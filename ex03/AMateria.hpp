@@ -1,7 +1,5 @@
 #ifndef MATERIA_HPP
 #define MATERIA_HPP
-# include <string>
-# include <iostream>
 # include "ICharacter.hpp"
 
 class ICharacter;
