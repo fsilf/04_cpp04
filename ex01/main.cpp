@@ -1,13 +1,9 @@
-#include "Animal.hpp"
 #include "Dog.hpp"
 #include "Cat.hpp"
-#include "Brain.hpp"
-#include <ostream>
-#include <iostream>
-#include <string>
 
 int main()
 {
+	std::cout << "-----------Array of cats and dogs---------\n";
 	Animal* odie = new Dog();
 	Animal* nermal = new Cat();
 	Animal* arr[2] = {odie, nermal};
@@ -15,6 +11,7 @@ int main()
 	for (unsigned int i=0; i < 2; i++)
 		delete arr[i];
 
+	std::cout << "-----------Testing Deep copies-----------\n";
 	Dog odie1;
 	Dog* odie2;
 	
@@ -40,5 +37,13 @@ int main()
 	   	<< odie2->get_brain().get_idea(0)  << std::endl;
 
 	delete odie2;
+
+	std::cout << "-------------Minimal main-------------\n";
+	const Animal* j = new Dog();
+	const Animal* i = new Cat();
+
+	delete j;
+	delete i;
+	std::cout << "-------------odie1 destructor---------\n";
 	return (0);
 }

@@ -1,8 +1,5 @@
 #ifndef DOG_HPP
 # define DOG_HPP
-# include <string>
-# include <iostream>
-# include <ostream>
 # include "Animal.hpp"
 # include "Brain.hpp"
 
@@ -15,12 +12,11 @@ class Dog: public Animal
 		virtual ~Dog();
 
 		Dog&			operator=(Dog const & rhs);
-		void			makeSound() const;			
+		virtual void	makeSound() const;
 		Brain&			get_brain() const;
 
 	private:
 		Brain*	_brain;
 };
 
-//std::ostream&	operator<<(std::ostream& o, Dog const & rhs);
 #endif

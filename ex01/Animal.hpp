@@ -2,7 +2,6 @@
 # define ANIMAL_HPP
 # include <string>
 # include <iostream>
-# include <ostream>
 
 class Animal
 {
@@ -20,5 +19,4 @@ class Animal
 		std::string		_type;
 };
 
-//std::ostream&	operator<<(std::ostream& o, Animal const & rhs);
 #endif

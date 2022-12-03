@@ -1,8 +1,4 @@
-#include <iostream>
-#include <ostream>
-#include <string>
 #include "Dog.hpp"
-#include "Brain.hpp"
 
 Dog::Dog():Animal("Dog"), _brain(new Brain())
 {
@@ -37,11 +33,3 @@ Brain&	Dog::get_brain() const
 {
 	return *(this->_brain);
 }
-
-/*
-std::ostream&	operator<<(std::ostream& o, Dog const & rhs)
-{
-	o << "Dog with type " << rhs.getType() << std::endl; 
-	return o;
-}
-*/

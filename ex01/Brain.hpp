@@ -1,8 +1,6 @@
 #ifndef BRAIN_HPP
 # define BRAIN_HPP
-# include <string>
 # include <iostream>
-//# include <ostream>
 
 class Brain
 {
@@ -19,5 +17,4 @@ class Brain
 		std::string		get_idea(unsigned int num_idea) const;
 };
 
-//std::ostream&	operator<<(std::ostream& o, Brain const & rhs);
 #endif
