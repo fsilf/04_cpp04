@@ -23,8 +23,8 @@ int main()
 
 	ICharacter* bob = new Character("bob");
 
-	//me->use(0, *bob);
-	//me->use(1, *bob);
+	me->use(0, *bob);
+	me->use(1, *bob);
 
 	me->unequip(1);
 
@@ -58,6 +58,11 @@ int main()
 	
 	two->list_inventory();
 	the_other->list_inventory();
+
+	two->use(1, *bob);
+	two->use(1, *the_other);
+	the_other->use(0, *the_other);
+	the_other->use(3, *the_other);
 
 	delete bob;
 	delete two;

@@ -18,7 +18,7 @@ class Character: public ICharacter
 		void setName(const std::string name);
 		void equip(AMateria* m);
 		void unequip(int idx);
-		//void use(int idx, ICharacter& target) = 0;
+		void use(int idx, ICharacter& target);
 		void list_inventory() const;
 
 		AMateria*	inventory[4];

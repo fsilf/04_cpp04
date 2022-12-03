@@ -90,6 +90,26 @@ void	Character::unequip(int idx)
 	std::cout << "Not a valid id" << std::endl;
 }
 
+void	Character::use(int idx, ICharacter& target)
+{
+	if (idx >= 0 && idx < 4)
+	{
+		if (this->inventory[idx] != NULL)
+		{
+			this->inventory[idx]->use(target);
+			return;
+		}
+		else
+		{
+			std::cerr << "Character " << target.getName() 
+				<< " use error: No materia with that idx\n";
+			return;
+		}
+		std::cerr << "Character " << target.getName() 
+				<< " use error: invalid idx\n";
+	}
+}
+
 void	Character::list_inventory() const
 {
 	std::cout << "---Inventory of " << this->_name << " is: " << std::endl;
