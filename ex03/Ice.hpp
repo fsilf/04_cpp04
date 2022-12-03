@@ -10,7 +10,7 @@ class Ice: public AMateria
 		virtual ~Ice();
 
 		Ice*	clone() const;
-		//void	use(ICharacter& target);
+		void	use(ICharacter& target);
 
 	protected:
 		Ice(Ice const& src);

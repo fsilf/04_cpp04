@@ -62,8 +62,10 @@ int main()
 	two->use(1, *bob);
 	two->use(1, *the_other);
 	the_other->use(0, *the_other);
+	the_other->use(2, *the_other);
 	the_other->use(3, *the_other);
 
+	std::cout << "----------Deletes--------------\n";
 	delete bob;
 	delete two;
 	delete the_other;

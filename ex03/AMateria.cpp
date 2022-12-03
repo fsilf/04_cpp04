@@ -24,19 +24,6 @@ const std::string& AMateria::getType() const
 
 void	AMateria::use(ICharacter& target)
 {
-	if (this->_type == "ice")
-	{
-		std::cout << "* shoots an ice bolt at " << target.getName() 
-			<< " *" << std::endl;
-	}
-	else if (this->_type == "cure")
-	{
-		std::cout << "* heals " << target.getName() 
-			<< "'s wounds *" << std::endl;
-	}
-	else
-	{
-		std::cout << "AMateria::use: No use for materia of type "
-			<< this->_type << std::endl;
-	}
+	std::cerr << "Not possible to use materia of type "
+		<< this->_type << " on " << target.getName() <<  std::endl;
 }

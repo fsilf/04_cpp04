@@ -10,7 +10,7 @@ class Cure: public AMateria
 		virtual ~Cure();
 
 		Cure*	clone() const;
-		//void	use(ICharacter& target);
+		void	use(ICharacter& target);
 
 	protected:
 		Cure(Cure const& src);

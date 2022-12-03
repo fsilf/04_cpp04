@@ -96,23 +96,24 @@ void	Character::use(int idx, ICharacter& target)
 	{
 		if (this->inventory[idx] != NULL)
 		{
+			std::cout << "Character " << this->getName() << " ";
 			this->inventory[idx]->use(target);
 			return;
 		}
 		else
 		{
-			std::cerr << "Character " << target.getName() 
+			std::cerr << "Character " << this->getName()
 				<< " use error: No materia with that idx\n";
 			return;
 		}
-		std::cerr << "Character " << target.getName() 
+		std::cerr << "Character " << this->getName()
 				<< " use error: invalid idx\n";
 	}
 }
 
 void	Character::list_inventory() const
 {
-	std::cout << "---Inventory of " << this->_name << " is: " << std::endl;
+	std::cout << "--- Inventory of " << this->_name << " is: " << std::endl;
 	for (unsigned int i=0; i<4; i++)
 	{
 		if (this->inventory[i] != NULL)
