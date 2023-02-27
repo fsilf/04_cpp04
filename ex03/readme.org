@@ -1,10 +1,10 @@
 #+author: fsilvaf
 
 * Cpp04 Module - Exercise 03
-~Materia~ are items in the Final Fantasy VII series that allow a character to cast spells, summon, and use new command abilities, boost stats and give support abilities. In this project we create several classes emulating the behavior of Materia for a Character.
+~Materia~ are items in the Final Fantasy VII series that allow a character to cast spells, to summon creatures, and to use new command abilities. In this project we create several classes emulating the behavior of ~Materia~ for a ~Character~.
 
 ** Create AMateria class
-Constrains for the abstract class AMateria:
+Constrains for the abstract class ~AMateria~:
 #+begin_src cpp
   class AMateria
   {
@@ -19,10 +19,10 @@ Constrains for the abstract class AMateria:
   };
 #+end_src
 
-** Create the concrete Materias Ice and Cure.
-- Their type will be their name in lowercase ("ice" for Ice)
-- Their ~clone()~ method will return a new instance of the real Materia’s type.
-- Their ~use(ICharacter&)~ method, it’ll display:
+** Create the concrete Materias Ice and Cure
+- Their ~type~ will be their name in lowercase ("ice" for ~Ice~)
+- Their ~clone()~ method will return a new instance of the real ~Materia~’s type.
+- Their ~use(ICharacter&)~ method will display:
     - Ice: "* shoots an ice bolt at NAME *"
     - Cure: "* heals NAME’s wounds *"
 
@@ -41,24 +41,26 @@ Implement the following interface:
   };
 #+end_src
 
-*** Characyer
+*** Character
 - Your ~Character~ must have a constructor taking its name as a parameter.
 
 - Copy or assignation of a ~Character~ must be deep.
 
-- The old ~Materia~ of a ~Character~ must be deleted, same upon the destruction of a Character (No leaks allowed!).
+- The old ~Materia~ of a ~Character~ must be deleted. Same upon the destruction of a ~Character~ (NO LEAKS ALLOWED).
 
 *** inventory
 The ~Character~ possesses an inventory of 4 ~Materia~ at most, empty at the start. He’ll equip the ~Materia~ in the slots 0 to 3, in that order. Do nothing if we try to equip a ~Materia~ in a full inventory, or if we  try to use/unequip a nonexistent ~Materia~.
 
 *** unequip
-**The ~unequip~ method must NOT delete ~Materia~!** (And no leaks allowed!)
+The ~unequip~ method must NOT delete ~Materia~! (NO LEAKS ALLOWED)
 
 *** use
 The ~use(int, ICharacter&)~ method will have to use the ~Materia~ at the ~idx~ slot, and pass ~target~ as parameter to the ~AMateria::use~ method.
 
 ** Create the MateriaSource class
-Implement the following interface:
+Your ~Source~ must be able to learn "templates" of ~Materia~ and re-create them on demand. You’ll then be able to create a ~Materia~ without knowing its "real" type, just a string identifying it.
+I
+mplement the following interface:
 #+begin_src cpp
   class IMateriaSource
   {
@@ -71,7 +73,6 @@ Implement the following interface:
 
 *** learnMateria
 ~learnMateria~ must copy the ~Materia~ passed as a parameter and store it in memory to be cloned later. Much in the same way as for ~Character~, the ~Source~ can know at most 4 Materia, which are not necessarily unique.
+
 *** createMateria
 ~createMateria(std::string const &)~ will return a new ~Materia~, which will be a copy of the ~Materia~ (previously learned by the ~Source~) with a type equal to the parameter. It will return 0 if the type is unknown.
-
-In a nutshell, your ~Source~ must be able to learn "templates" of ~Materia~ and re-create them on demand. You’ll then be able to create a ~Materia~ without knowing its "real" type, just a string identifying it.
