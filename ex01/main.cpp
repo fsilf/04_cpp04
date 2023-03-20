@@ -34,7 +34,7 @@ int main()
 	std::cout << "The first idea in odie1 brain is: " 
 		<< odie1.get_brain().get_idea(0) << std::endl;
 	std::cout << "The first idea in odie2 brain is: "
-	   	<< odie2->get_brain().get_idea(0)  << std::endl;
+		<< odie2->get_brain().get_idea(0)  << std::endl;
 
 	delete odie2;
 
@@ -42,8 +42,17 @@ int main()
 	const Animal* j = new Dog();
 	const Animal* i = new Cat();
 
-	delete j;
-	delete i;
-	std::cout << "-------------odie1 destructor---------\n";
+    delete j;
+    delete i;
+    std::cout << "-------------odie1 destructor---------\n";
+
+	Dog dog1;
+	{
+		std::cout << "before----------\n";
+		Dog dog2 = dog1;
+		//Dog dog2;
+		//dog2 = dog1;
+		std::cout << "after-----------\n";
+	}
 	return (0);
 }
